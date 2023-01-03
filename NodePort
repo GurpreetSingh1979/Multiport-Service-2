@@ -1,0 +1,38 @@
+Service Nodeport
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multipod
+  labels:
+    environment: dev
+spec:
+  containers:
+  - name: nginxcontainer
+    image: nginx
+    ports:
+    - containerPort: 80
+
+kubectl expose pod/multipod --type=NodePort --name=nginxservice
+
+to access from the browser
+minikube service nginxservice --
+
+
+service via yml file
+
+apiVersion  : v1
+kind: Service
+metadata:
+  name: nordport-service
+spec:
+  type: NodePort
+  selector:
+    environment: dev
+  ports:
+    - protocol : TCP
+      nodePort: 30000
+      port: 8000
+      targetPort: 80
+
+minikube service nordport-service --url
